@@ -5,7 +5,9 @@
 file: w1.py
 """
 import sys
-from PyQt5.QtWidgets import (QLabel, QCheckBox, QPushButton, QVBoxLayout,QHBoxLayout, QApplication, QWidget,QLineEdit,QMessageBox,QDesktopWidget)
+from PyQt5.QtWidgets import (QLabel, QCheckBox, QPushButton, QVBoxLayout,QHBoxLayout, QApplication, 
+    QWidget,QLineEdit,QMessageBox,QDesktopWidget,QFormLayout)
+import DataBaseRelated,w2
 
 
 class Window(QWidget):
@@ -23,23 +25,18 @@ class Window(QWidget):
         self.b1 = QPushButton('登录')
         self.b2 = QPushButton('注册')
         #self.setGeometry(200,200,200,200)
+        layout=QFormLayout()
+        layout.addRow(self.l1,self.le1)
+        layout.addRow(self.l2,self.le2)
+        
         v_box = QVBoxLayout()
-        h_box1 = QHBoxLayout()
-        h_box2 = QHBoxLayout()
-        h_box3 = QHBoxLayout()
+        h_box = QHBoxLayout()
 
-        h_box1.addWidget(self.l1)
-        h_box1.addWidget(self.le1)
-        v_box.addLayout(h_box1)
+        h_box.addWidget(self.b1)
+        h_box.addWidget(self.b2)
 
-        h_box2.addWidget(self.l2)
-        h_box2.addStretch(1000)
-        h_box2.addWidget(self.le2)
-        v_box.addLayout(h_box2)
-
-        h_box3.addWidget(self.b1)
-        h_box3.addWidget(self.b2)
-        v_box.addLayout(h_box3)
+        v_box.addLayout(layout)
+        v_box.addLayout(h_box)
 
         self.setLayout(v_box)
         self.setWindowTitle('用户登录')
@@ -59,13 +56,46 @@ class Window(QWidget):
         self.move(qr.topLeft())
 
     def btn1_clk(self):
-            self.le.clear()
+        username=str(self.le1.text())
+        password=str(self.le2.text())
+        cur,conn=DataBaseRelated.ini()
+        if DataBaseRelated.signin(username,password,cur)==0:
+                self.hide()
+                self.window2=w2.Window(username)
+                self.window2.show()
+
+        elif DataBaseRelated.signin(username,password,cur)==1:
+            buttonReply = QMessageBox.question(self, 'temproom', "密码错误，请重新登录", QMessageBox.Yes)
+            if buttonReply==QMessageBox.Yes:
+                self.show()
+
+        elif DataBaseRelated.signin(username,password,cur)==2:
+            buttonReply = QMessageBox.question(self, 'temproom', "不存在此用户，请注册", QMessageBox.Yes)
+            if buttonReply == QMessageBox.Yes:
+                self.show()
+        conn.close()
 
     def btn2_clk(self):
-            print(self.le.text())
+        username = self.le1.text()
+        password = self.le2.text()
+        cur, conn = DataBaseRelated.ini()
+        if not DataBaseRelated.search_username(username,cur):
+            DataBaseRelated.signup(username,password,cur,conn)
+            buttonReply = QMessageBox.question(self, 'temproom', "注册成功！", QMessageBox.Yes)
+            if buttonReply == QMessageBox.Yes:
+                self.hide()
+                self.window2 = w2.Window(username)
+                self.window2.show()
+
+        else:
+            buttonReply = QMessageBox.question(self, 'temproom', "用户名已被占用，请重新注册", QMessageBox.Yes)
+            if buttonReply == QMessageBox.Yes:
+                self.show()
+        conn.close()
 
 
 
-app = QApplication(sys.argv)
-a_window = Window()
-sys.exit(app.exec_())
+if __name__=='__main__':
+    app = QApplication(sys.argv)
+    a_window = Window()
+    sys.exit(app.exec_())
