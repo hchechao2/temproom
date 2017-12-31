@@ -146,7 +146,7 @@ class CreateWindow(QWidget):
             if not DataBaseRelated.search_room(roomnumber,cur):
                 DataBaseRelated.newroom(roomnumber,keyintoroom,self.currentuser,cur,conn)
                 a = QMessageBox(self)
-                a.setText("注册成功!请牢记密码:",keyintoroom)
+                a.setText("注册成功!请牢记密码:"+str(keyintoroom))
                 a.setFont(self.font)
                 a.setWindowModality(QtCore.Qt.WindowModal)
 
