@@ -136,7 +136,7 @@ class Dialog(QDialog):
                 self.close()
    
     def test(self):
-        v = Visualization()
+        Visualization()
         
         
     def changecb1(self):
