@@ -14,7 +14,12 @@ import send,record,play,threading
 import DataBaseRelated
 import qdarkstyle
 from Visualization import Visualization
-
+from Visualization import Visualization
+from mysignal import Signal
+from pydub import AudioSegment
+import winsound
+import wave
+import os
 
 class Dialog(QDialog):
     number=0
@@ -24,7 +29,8 @@ class Dialog(QDialog):
     username=''
     closesignal=0
     font = QtGui.QFont("Arial", 12, QtGui.QFont.Bold)
-    flag=0;
+    flag_voicechange=0;
+    flag_denoise=0;
     def __init__(self,username,roomnumber):
         super(Dialog, self).__init__()
         self.setWindowIcon(QtGui.QIcon('1.png'))
@@ -34,8 +40,8 @@ class Dialog(QDialog):
         self.l4 = QLabel(str(roomnumber))
         self.b1 = QPushButton('连接服务器')
         self.b2 = QPushButton('下线')
-        self.cb1 = QCheckBox("童声")
-        self.cb2 = QCheckBox("男声")
+        self.cb1 = QCheckBox("清脆")
+        self.cb2 = QCheckBox("低沉")
         self.cb3 = QCheckBox("降噪")
         self.t1 = QPushButton("麦克风测试")
         #self.cb1= QCheckBox("HHH")
@@ -127,52 +133,36 @@ class Dialog(QDialog):
 
 
             if a.exec() == 1024:
-
                 self.close()
-    def changecb1(self):
-        self.flag=1
-        if self.cb2.isChecked():
-            self.cb2.setCheckState(Qt.Unchecked)
-
-    def changecb2(self):
-        self.flag=2
-        if self.cb1.isChecked():
-            self.cb1.setCheckState(Qt.Unchecked)
-           #self.cb1.setChecked(false)
-
-
-    def changecb3(self):
-        self.flag=3
-
-    '''
-    #需要import的文件
-    from mysignal import Signal
-    from pydub import AudioSegment
-    import winsound
-    import wave
-    import os
-    #输入的wav文件
-      receive_video=username+'.wav'
-      x = Signal(receive_video)
-    #变声的代码,判断标志位获得不同的效果
-    if flag==1:#低沉
-        x.changenansheng();
-        x.write(username+'.wav')
-    elif flag==2:#高昂
-        x.changetongsheng();
-        x.write(username+'.wav')
-    elif flag==3:#降噪
-        noise=noise = Signal('noise.wav')
-        x.noise_removal(noise)
-        x.write(username+'.wav')
-    receive_video=username+'.wav'
-    winsound.PlaySound(receive_video, winsound.SND_ALIAS)
-    '''
-
-
+   
     def test(self):
         v = Visualization()
+        
+        
+    def changecb1(self):
+        if self.cb2.isChecked():
+            self.cb2.setCheckState(Qt.Unchecked)
+        if self.cb1.isChecked():
+            self.flag_voicechange=1
+        else:
+            self.flag_voicechange=0
 
+    def changecb2(self):
+        if self.cb1.isChecked():
+            self.cb1.setCheckState(Qt.Unchecked)
+        if self.cb2.isChecked():
+            self.flag_voicechange=2
+        else:
+            self.flag_voicechange=0
+
+    def changecb3(self):
+        if self.cb3.isChecked():
+            self.flag_denoise=1
+        else:
+            self.flag_denoise=0
+        
+        
+     
     def connect(self):
         try:
             so =send.client_connect()
@@ -282,6 +272,18 @@ class Dialog(QDialog):
     def flow(self,s):
         while 1:
             record.record(self.username)
+            receive_video=self.username+'.wav'
+            x = Signal(receive_video)
+            if flag_denoise==1:#降噪
+                noise = Signal1('noise.wav')
+                x.noise_removal(noise)
+                x.write(self.username+'.wav')
+            if flag_voicechange==2:#低沉
+                x.changenansheng();
+                x.write(self.username+'.wav')
+            elif  flag_voicechange==1:#清脆
+                x.changetongsheng();
+                x.write(self.username+'.wav')
             send.send(s, self.username)
             for i in self.userlist:
                 if self.username != i:
