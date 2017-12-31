@@ -14,7 +14,6 @@ import send,record,play,threading
 import DataBaseRelated
 import qdarkstyle
 from Visualization import Visualization
-from Visualization import Visualization
 from mysignal import Signal
 from pydub import AudioSegment
 import winsound
@@ -274,14 +273,14 @@ class Dialog(QDialog):
             record.record(self.username)
             receive_video=self.username+'.wav'
             x = Signal(receive_video)
-            if flag_denoise==1:#降噪
-                noise = Signal1('noise.wav')
+            if self.flag_denoise==1:#降噪
+                noise = Signal('noise.wav')
                 x.noise_removal(noise)
                 x.write(self.username+'.wav')
-            if flag_voicechange==2:#低沉
+            if self.flag_voicechange==2:#低沉
                 x.changenansheng();
                 x.write(self.username+'.wav')
-            elif  flag_voicechange==1:#清脆
+            elif self.flag_voicechange==1:#清脆
                 x.changetongsheng();
                 x.write(self.username+'.wav')
             send.send(s, self.username)
