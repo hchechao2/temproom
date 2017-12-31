@@ -15,10 +15,6 @@ import DataBaseRelated
 import qdarkstyle
 from Visualization import Visualization
 from mysignal import Signal
-from pydub import AudioSegment
-import winsound
-import wave
-import os
 
 class Dialog(QDialog):
     number=0
