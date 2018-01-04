@@ -47,17 +47,16 @@ def trans1(client):#接受音频文件
 
 def trans2(k,client,t):#转发音频文件
     for j in t:
-        # if j.get_result()==0:#如果没接收到文件，程序退出
-        #     global closesignal
-        #     closesignal = 1
-        #     sys.exit(-1)
+        if j.get_result() == 0:  # 如果没接收到文件，程序退出
+            global closesignal
+            # closesignal = 1
+            # sys.exit(-1)
 
-        if j!=t[k]:
+        elif j != t[k]:
             while 1:
-                if not j.isAlive():#接受进程结束后转发
+                if not j.isAlive():  # 接受进程结束后转发
                     break
-            print(j.get_result())
-            recv.send(client,j.get_result())
+            recv.send(client, j.get_result())
 
 
 
