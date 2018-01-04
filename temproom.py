@@ -279,6 +279,7 @@ class Dialog(QDialog):
             elif self.flag_voicechange==1:#清脆
                 x.changetongsheng();
                 x.write(self.username+'.wav')
+
             send.send(s, self.username)
             for i in self.userlist:
                 if self.username != i:
