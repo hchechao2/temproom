@@ -56,6 +56,7 @@ def trans2(k,client,t):#转发音频文件
             while 1:
                 if not j.isAlive():  # 接受进程结束后转发
                     break
+            print(j.get_result())
             recv.send(client, j.get_result())
 
 

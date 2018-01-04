@@ -265,7 +265,7 @@ if __name__=='__main__':
     #print(search_room(121,cur))
     #getinroom('anyone4',15,2,cur,conn)
     #useroffline('',5118,cur,conn)
-    useroffline('test2', 8693, cur, conn)
+    useroffline('test1', 8568, cur, conn)
     #print(curretroomusernumber(2222, cur))
     #roomoffline(123456,cur,conn)
     #search_room(15,cur)
