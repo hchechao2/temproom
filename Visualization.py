@@ -5,34 +5,25 @@ Created on Fri Nov 17 11:42:21 2017
 @author: Lenovo
 """
 import pyaudio
-#import pylab as pl
 import numpy as np 
 from matplotlib.ticker import  MultipleLocator
 from matplotlib.ticker import  FormatStrFormatter
 #from pyqt5 import QtGui,QtCore
 import pyqtgraph as pg
-# import tushare as ts
-#import numpy as np
-#import PIL
-#import tkinter
-#from PIL import Image,ImageTK
-
 class Visualization(object):
     """docstring for Visualization"""
     def __init__(self):
         # super(Visualization, self).__init__()
         # self.arg = arg
         
-        ymajorLocator = MultipleLocator(1000)
-        ymajorFormatter = FormatStrFormatter('%1.1f')
+        MultipleLocator(1000)
+        FormatStrFormatter('%1.1f')
 
         win = pg.GraphicsWindow(title='麦克风测试')
-        # win.connect(win,  Qt.SIGNAL('triggered()'), win.closeEvent)
         stringaxis = pg.AxisItem(orientation='bottom')
-        plot = win.addPlot(axisItems={'bottom': stringaxis}, title='麦克风测试波形')
+        plot = win.addPlot(axisItems={'bottom': stringaxis}, title='麦克风功能测试')
         label = pg.TextItem()
         plot.addItem(label)
-        # plot.addLegend(size=(150, 80))
         plot.showGrid(x=True, y=True, alpha=0.5)
         plot.setLabel(axis='left')
         plot.setLabel(axis='bottom', text='time (seconds)')
@@ -62,7 +53,7 @@ class Visualization(object):
                 data = stream.read(CHUNK)
                 frames.append(data)
             
-            print("End recording")
+            #print("End recording")
             
             stream.stop_stream()
             stream.close()
