@@ -112,7 +112,7 @@ class CreateWindow(QWidget):
             if a.exec() == 1024:
                 self.le2.clear()
 
-        elif len(keyintoroom) != 6:
+        elif len(keyintoroom) != 4:
             a = QMessageBox(self)
             a.setText("密匙应当为4位数字！")
             a.setFont(self.font)

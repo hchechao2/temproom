@@ -149,7 +149,7 @@ class Window(QWidget):
 
                 if a.exec() == 1024:
                     return 0
-            # cur, conn = DataBaseRelated.ini()
+
             if DataBaseRelated.getinroom(self.currentuser, roomnumber, keyintoroom, cur, conn)==0:
                 self.hide()
                 self.window3 = temproom.Dialog(self.currentuser,roomnumber)
