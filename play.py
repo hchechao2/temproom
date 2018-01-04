@@ -1,31 +1,31 @@
 import pyaudio
 import wave
+import os
 # import sys
 
 def play(username):
     CHUNK = 1024
-    print('playing1')
-    try:
-    	wf = wave.open(username+'.wav', 'rb')
-    except:
-    	return 0
-    p = pyaudio.PyAudio()
-    print('playing2')
-    stream = p.open(format=p.get_format_from_width(wf.getsampwidth()),
-                    channels=wf.getnchannels(),
-                    rate=wf.getframerate(),
-                    output=True)
-    print('playing3')
-    data = wf.readframes(CHUNK)
-    print('playing4')
-    while data != b'':
-        stream.write(data)
+    if os.path.isfile(username+'.wav'):
+        wf = wave.open(username+'.wav', 'rb')
+        p = pyaudio.PyAudio()
+
+        stream = p.open(format=p.get_format_from_width(wf.getsampwidth()),
+                        channels=wf.getnchannels(),
+                        rate=wf.getframerate(),
+                        output=True)
+
         data = wf.readframes(CHUNK)
+        
+        while data != b'':
+            stream.write(data)
+            data = wf.readframes(CHUNK)
 
-    stream.stop_stream()
-    stream.close()
+        stream.stop_stream()
+        stream.close()
 
-    p.terminate()
+        p.terminate()
+    else:
+        print('no file to play')
 
 if __name__=='__main__':
     play('admincbh')
