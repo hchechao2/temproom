@@ -5,7 +5,7 @@ def record(username):
     FORMAT = pyaudio.paInt16
     CHANNELS = 2
     RATE = 22050
-    RECORD_SECONDS = 1
+    RECORD_SECONDS = 5
     WAVE_OUTPUT_FILENAME = username+'.wav'
 
     p = pyaudio.PyAudio()
@@ -21,7 +21,7 @@ def record(username):
     frames = []
 
     for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
-        data = stream.read(CHUNK)
+        data = stream.read(CHUNK,exception_on_overflow = False)
         frames.append(data)
 
     print("* done recording")
