@@ -24,7 +24,7 @@ class MyThread(threading.Thread):
         try:
             return self.result  # 如果子线程不使用join方法，此处可能会报没有self.result的错误
         except:
-            return 'null'
+            return 0
 
 
 def check():
