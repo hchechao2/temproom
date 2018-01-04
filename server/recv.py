@@ -132,7 +132,7 @@ def recv(conn):
         while not recvd_size == filesize:
             if filesize - recvd_size > 1024:
                 data = conn.recv(1024)
-                recvd_size += len(data)
+                recvd_size += 1024
             else:
                 data = conn.recv(filesize - recvd_size)
                 recvd_size = filesize
