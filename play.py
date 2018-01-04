@@ -15,7 +15,7 @@ def play(username):
                         output=True)
 
         data = wf.readframes(CHUNK)
-        
+
         while data != b'':
             stream.write(data)
             data = wf.readframes(CHUNK)
