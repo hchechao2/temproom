@@ -26,7 +26,7 @@ class CreateWindow(QWidget):
         self.l1 = QLabel('房间号')
         self.l2 = QLabel('密钥')
         
-        roomnumber = random.randint(100000, 999999)
+        roomnumber = random.randint(1000, 9999)
         try:
             cur, conn = DataBaseRelated.ini()
         except:
@@ -39,7 +39,7 @@ class CreateWindow(QWidget):
             if a.exec() == 1024:
                 return 0
         while DataBaseRelated.search_room(roomnumber,cur):
-            roomnumber = str(random.randint(100000, 999999))
+            roomnumber = str(random.randint(1000, 9999))
         conn.close()
             
         self.le1 = QLabel(str(roomnumber))
@@ -102,7 +102,7 @@ class CreateWindow(QWidget):
 
         if keyintoroom.isdigit()==False:
             a = QMessageBox(self)
-            a.setText("密匙应当为6位数字！")
+            a.setText("密匙应当为4位数字！")
             a.setFont(self.font)
             a.setWindowModality(QtCore.Qt.WindowModal)
 
@@ -114,7 +114,7 @@ class CreateWindow(QWidget):
 
         elif len(keyintoroom) != 6:
             a = QMessageBox(self)
-            a.setText("密匙应当为6位数字！")
+            a.setText("密匙应当为4位数字！")
             a.setFont(self.font)
             a.setWindowModality(QtCore.Qt.WindowModal)
 

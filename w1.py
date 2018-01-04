@@ -157,9 +157,6 @@ class Window(QWidget):
                 a.setIcon(QMessageBox.NoIcon)
                 a.setDefaultButton(QMessageBox.Yes)
 
-
-                #buttonReply = a.(self, 'temproom', "您已经在线了，请勿重复登录", QMessageBox.Yes)
-
                 if a.exec() == 1024:
                     self.le1.clear()
                     self.le2.clear()

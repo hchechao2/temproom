@@ -120,9 +120,9 @@ class Window(QWidget):
         #         #self.le2.clear()
 
 
-        if str(self.le1.text()).isdigit()==False or str(self.le2.text()).isdigit()==False or len(str(self.le1.text())) != 6 or len(str(self.le2.text())) != 6:
+        if str(self.le1.text()).isdigit()==False or str(self.le2.text()).isdigit()==False or len(str(self.le1.text())) != 4 or len(str(self.le2.text())) != 4:
             a = QMessageBox(self)
-            a.setText("房间号和密码均为6位数字！")
+            a.setText("房间号和密码均为4位数字！")
             a.setFont(self.font)
             a.setWindowModality(QtCore.Qt.WindowModal)
 
@@ -146,7 +146,6 @@ class Window(QWidget):
                 a.setIcon(QMessageBox.NoIcon)
                 a.setDefaultButton(QMessageBox.Yes)
 
-                # buttonReply = a.(self, 'temproom', "您已经在线了，请勿重复登录", QMessageBox.Yes)
 
                 if a.exec() == 1024:
                     return 0
