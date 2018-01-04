@@ -1,5 +1,5 @@
 # Temproom -SE project
-#### 使用方法：下载所有文件到同一个文件夹中，运行w1.py即可。程序需要pyqt5,pyaudio,pymysql,qdarkstyle,pyqtgraph,matplotlib，scipy数个模块的支持，与数据库相关的函数都可以使用
+#### 使用方法：下载所有文件到同一个文件夹中，运行w1.py即可。程序需要pyqt5,pyaudio,pymysql,qdarkstyle,pyqtgraph,matplotlib,scipy数个模块的支持，与数据库相关的函数都可以使用
 
 ### 更新日志
 ##### 17.12.08更新  V0.0.1
@@ -58,5 +58,6 @@
 
 ##### 18.1.1更新 V0.2
 改进了交互逻辑
+
 1.自动分配房间号码，设置4位数口令
 2.增加了独立的注册界面
