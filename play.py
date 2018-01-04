@@ -16,8 +16,8 @@ def play(username):
                     output=True)
 
     data = wf.readframes(CHUNK)
-
-    while data != '':
+    print('playing')
+    while data != b'':
         stream.write(data)
         data = wf.readframes(CHUNK)
 
@@ -27,4 +27,4 @@ def play(username):
     p.terminate()
 
 if __name__=='__main__':
-    play(123)
+    play('admincbh')

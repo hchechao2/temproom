@@ -9,7 +9,7 @@ from PyQt5.QtWidgets import (QLabel, QCheckBox, QPushButton, QVBoxLayout,QHBoxLa
     QWidget,QLineEdit,QMessageBox,QDesktopWidget,QFormLayout)
 import qdarkstyle
 from PyQt5 import QtCore,QtGui
-import DataBaseRelated,w2
+import DataBaseRelated,w2,w3
 
 def check_contain_chinese(check_str):
     for ch in check_str:
