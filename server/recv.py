@@ -134,6 +134,7 @@ def recv(conn):
                 data = conn.recv(1024)
                 recvd_size += 1024
             else:
+                print(filesize - recvd_size)
                 data = conn.recv(filesize - recvd_size)
                 recvd_size = filesize
             fp.write(data)
