@@ -286,7 +286,7 @@ class Dialog(QDialog):
                     t = threading.Thread(target=play.play,args=[i])
                     t.start()
             if self.closesignal==1:
-                s.closesocket()
+                s.close()
                 break
 
 
