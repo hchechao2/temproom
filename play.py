@@ -6,6 +6,7 @@ import os
 def play(username):
     CHUNK = 1024
     if os.path.isfile(username+'.wav'):
+        print('play 1')
         wf = wave.open(username+'.wav', 'rb')
         p = pyaudio.PyAudio()
 
@@ -24,6 +25,7 @@ def play(username):
         stream.close()
 
         p.terminate()
+        print('play 2')
     else:
         print('no file to play')
 
