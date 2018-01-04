@@ -4,8 +4,8 @@ Created on Fri Nov 17 11:42:21 2017
 
 @author: Lenovo
 """
-import pyaudio  
-import pylab as pl  
+import pyaudio
+#import pylab as pl
 import numpy as np 
 from matplotlib.ticker import  MultipleLocator
 from matplotlib.ticker import  FormatStrFormatter
