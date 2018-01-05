@@ -255,11 +255,11 @@ class Dialog(QDialog):
 
             if DataBaseRelated.curretroomusernumber(self.roomnumber, cur) != self.number:
                 cur2, conn2 = DataBaseRelated.ini()
-                self.number = DataBaseRelated.curretroomusernumber(self.roomnumber, cur)
+                self.number = DataBaseRelated.curretroomusernumber(self.roomnumber, cur2)
                 del self.userlist[:]
                 # del self.user[:]
 
-                result = DataBaseRelated.curretroomusers(self.roomnumber, cur)
+                result = DataBaseRelated.curretroomusers(self.roomnumber, cur2)
                 conn2.close()
                 for i in range(10):
                     self.user[i].setText('')
