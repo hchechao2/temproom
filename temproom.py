@@ -131,6 +131,23 @@ class Dialog(QDialog):
 
             if a.exec() == 1024:
                 self.close()
+        try:
+            self.t2=threading.Thread(target=self.connect)
+            self.t2.setDaemon(True)
+            self.t2.start()
+        except:
+
+            a = QMessageBox(self)
+            a.setFont(self.font)
+            a.setText("程序异常，请退出")
+            a.setWindowModality(QtCore.Qt.WindowModal)
+
+            a.setIcon(QMessageBox.NoIcon)
+            a.setDefaultButton(QMessageBox.Yes)
+
+
+            if a.exec() == 1024:
+                self.close()
    
     def test(self):
         Visualization()
@@ -162,7 +179,7 @@ class Dialog(QDialog):
      
     def connect(self):
         while 1:
-            if self.status==0:
+            if self.status==0 and self.number>=2:
                 try:
                     so =send.client_connect()
                     so.settimeout(2)
@@ -235,16 +252,12 @@ class Dialog(QDialog):
             #print(self.number)
 
             cur, conn = DataBaseRelated.ini()
-            #print(DataBaseRelated.curretroomusernumber(self.roomnumber, cur))
 
             if DataBaseRelated.curretroomusernumber(self.roomnumber, cur) != self.number:
                 cur2, conn2 = DataBaseRelated.ini()
                 self.number = DataBaseRelated.curretroomusernumber(self.roomnumber, cur)
                 del self.userlist[:]
                 # del self.user[:]
-
-                if self.closesignal == 1:
-                    break
 
                 result = DataBaseRelated.curretroomusers(self.roomnumber, cur)
                 conn2.close()
@@ -259,8 +272,6 @@ class Dialog(QDialog):
                 self.update()
 
             conn.close()
-            if self.closesignal == 1:
-                break
 
 
 
