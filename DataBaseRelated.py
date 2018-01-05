@@ -10,8 +10,11 @@ import pymysql
 
 
 def ini():
-    conn=pymysql.connect(host='120.79.72.9',user='root',passwd='123',db='temproom',unix_socket="/var/run/mysqld/mysqld.sock")
-    cur = conn.cursor()
+    try:
+        conn=pymysql.connect(host='120.79.72.9',user='root',passwd='123',db='temproom',unix_socket="/var/run/mysqld/mysqld.sock")
+        cur = conn.cursor()
+    except:
+        cur,conn=ini()
     return cur,conn
 
 

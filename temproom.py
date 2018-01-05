@@ -283,42 +283,44 @@ class Dialog(QDialog):
 
 
     def flow(self,s):
-        while 1:
-            record.record(self.username)
-            receive_video=self.username+'.wav'
-            x = Signal(receive_video)
-            if self.flag_denoise==1:#降噪
-                noise = Signal('noise.wav')
-                x.noise_removal(noise)
-                x.write(self.username+'.wav')
-            if self.flag_voicechange==2:#低沉
-                x.changenansheng();
-                x.write(self.username+'.wav')
-            elif self.flag_voicechange==1:#清脆
-                x.changetongsheng();
-                x.write(self.username+'.wav')
+        if s.recv(7).decode() == 'success':
+            while 1:
+                record.record(self.username)
+                receive_video=self.username+'.wav'
+                x = Signal(receive_video)
+                if self.flag_denoise==1:#降噪
+                    noise = Signal('noise.wav')
+                    x.noise_removal(noise)
+                    x.write(self.username+'.wav')
+                if self.flag_voicechange==2:#低沉
+                    x.changenansheng();
+                    x.write(self.username+'.wav')
+                elif self.flag_voicechange==1:#清脆
+                    x.changetongsheng();
+                    x.write(self.username+'.wav')
 
-            try:
-                send.send(s, self.username)
-            except:
-                print('客户端发送失败')
-                self.status=0
-                sys.exit()
-            for i in self.userlist:
-                if self.username != i:
-                    try:
-                        send.recv(s)
-                        # t = threading.Thread(target=play.play,args=[i])
-                        # t.start()
-                        play.play(i)
-                    except:
-                        print('客户端接受失败')
-                        self.status = 0
-                        sys.exit()
 
-            if self.closesignal==1:
-                s.close()
-                break
+                try:
+                    send.send(s, self.username)
+                except:
+                    print('客户端发送失败')
+                    self.status=0
+                    sys.exit()
+                for i in self.userlist:
+                    if self.username != i:
+                        try:
+                            send.recv(s)
+                            # t = threading.Thread(target=play.play,args=[i])
+                            # t.start()
+                            play.play(i)
+                        except:
+                            print('客户端接受失败')
+                            self.status = 0
+                            sys.exit()
+
+                if self.closesignal==1:
+                    s.close()
+                    break
 
 
 

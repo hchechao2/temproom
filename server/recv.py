@@ -44,6 +44,9 @@ def server_connect(client_number):
         conn.settimeout(5)
         clients.append((conn,addr))
         print("连接成功 "+str(addr))
+    for i in clients:
+        noti='success'
+        i[0].send(noti.encode())
     return clients
     #     self._result = result
     #
