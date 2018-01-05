@@ -92,8 +92,9 @@ def trans3():
             t1[j].start()
 
         for k in range(amount):
+            global signal
             if signal==1:
-                global signal
+
                 signal=0
                 print('函数重启')
                 return 1
