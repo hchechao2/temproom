@@ -288,8 +288,8 @@ class Dialog(QDialog):
             num=1
             for i in self.userlist:
                 if self.username != i:
-                    t = threading.Thread(target=play.play, args=[i])
-                    t.start()
+                    self.t3 = threading.Thread(target=play.play, args=[i])
+                    self.t3.start()
             while 1:
                 record.record(self.username)
                 receive_video=self.username+'.wav'
