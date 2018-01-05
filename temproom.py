@@ -318,11 +318,12 @@ class Dialog(QDialog):
                     if self.username != i:
                         try:
                             send.recv(s,num)
-                            num += 1
+
 
                             self.t3 = threading.Thread(target=play.play, args=(i,num))
                             self.t3.setDaemon(True)
                             self.t3.start()
+                            num += 1
                         except:
                             print('客户端接受失败')
                             self.status = 0
