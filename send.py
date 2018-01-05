@@ -20,7 +20,7 @@ def client_connect():
     except socket.error as msg:
         print (msg)
         sys.exit(1)
-    print('连接服务器成功')
+
     return s
     #
     # print (bytes.decode(s.recv(1024)))

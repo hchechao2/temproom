@@ -284,6 +284,7 @@ class Dialog(QDialog):
 
     def flow(self,s):
         if s.recv(7).decode() == 'success':
+            print('连接服务器成功')
             num=1
             for i in self.userlist:
                 if self.username != i:
