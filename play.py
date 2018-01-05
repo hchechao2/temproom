@@ -30,7 +30,7 @@ def play(username):
             num +=1
             print('play succeed')
         else:
-            print('wait to play')
+            pass
 
 if __name__=='__main__':
     play('admincbh')
