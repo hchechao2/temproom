@@ -285,8 +285,10 @@ class Dialog(QDialog):
     def flow(self,s):
         if s.recv(7).decode() == 'success':
             num=1
-            t = threading.Thread(target=play.play, args=[i])
-            t.start()
+            for i in self.userlist:
+                if self.username != i:
+                    t = threading.Thread(target=play.play, args=[i])
+                    t.start()
             while 1:
                 record.record(self.username)
                 receive_video=self.username+'.wav'
