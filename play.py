@@ -7,9 +7,9 @@ def play(username):
     num=1
     CHUNK = 1024
     while 1:
-        if os.path.isfile(username+str(num)+'.wav'):
-            #print('play 1')
-            wf = wave.open(username+str(num)+'.wav', 'rb')
+        if os.path.isfile(username+'_'+str(num)+'.wav'):
+
+            wf = wave.open(username+'_'+str(num)+'.wav', 'rb')
             p = pyaudio.PyAudio()
 
             stream = p.open(format=p.get_format_from_width(wf.getsampwidth()),
@@ -28,7 +28,7 @@ def play(username):
 
             p.terminate()
             num +=1
-            #print('play 2')
+            print('play succeed')
         else:
             print('no file to play')
             break
