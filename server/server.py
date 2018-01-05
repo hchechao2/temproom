@@ -8,8 +8,7 @@ import threading
 import DataBase_server
 import recv
 import sys
-
-closesignal=0
+signal=0
 class MyThread(threading.Thread):
 
     def __init__(self,func,args=()):
@@ -47,16 +46,15 @@ def trans1(client):#接受音频文件
 
 def trans2(k,client,t):#转发音频文件
     for j in t:
-        if j.get_result() == 0:  # 如果没接收到文件，程序退出
-            global closesignal
-            # closesignal = 1
-            # sys.exit(-1)
+        if j.get_result() == 0:# 如果没接收到文件，程序退出
+            global signal
+            signal=1
+            j.exit()
 
         elif j != t[k]:
             while 1:
                 if not j.isAlive():  # 接受进程结束后转发
                     break
-            print(j.get_result())
             recv.send(client, j.get_result())
 
 
@@ -77,30 +75,34 @@ def trans3():
     clients=recv.server_connect(amount)#建立socket
     while 1:
         for j in range(amount):
-            if closesignal==1:
-                sys.exit(-1)
+
             th=MyThread(func=trans1,args=[clients[j][0]])#创建接受子线程
 
             if len(t1)<j+1:#如果是第一次转发
                 t1.append(th)
             else:#如果不是第一次转发
                 t1[j]=th
+            t1[j].setDaemon(True)
             t1[j].start()
 
         for k in range(amount):
-            if closesignal == 1:
-                sys.exit(-1)
+            if signal==1:
+                return 1
+
             th2=threading.Thread(target=trans2,args=(k,clients[k][0],t1))#创建转发子线程
 
             if len(t2)<k+1:#同上
                 t2.append(th2)
             else:
                 t2[k]=th2
+
+            t2[k].setDaemon(True)
             t2[k].start()
             t2[k].join()
 
 if __name__=='__main__':
-    trans3()
+    while 1:
+        trans3()
 
 
 

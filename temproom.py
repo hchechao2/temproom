@@ -26,6 +26,7 @@ class Dialog(QDialog):
     font = QtGui.QFont("Arial", 12, QtGui.QFont.Bold)
     flag_voicechange=0;
     flag_denoise=0;
+    status=0
     def __init__(self,username,roomnumber):
         super(Dialog, self).__init__()
         self.setWindowIcon(QtGui.QIcon('1.png'))
@@ -33,7 +34,7 @@ class Dialog(QDialog):
         self.l2 = QLabel('房间号：')
         self.l3 = QLabel(str(username))
         self.l4 = QLabel(str(roomnumber))
-        self.b1 = QPushButton('连接服务器')
+        # self.b1 = QPushButton('连接服务器')
         self.b2 = QPushButton('下线')
         self.cb1 = QCheckBox("清脆")
         self.cb2 = QCheckBox("低沉")
@@ -44,14 +45,14 @@ class Dialog(QDialog):
         self.setFont(self.font)
         self.l1.setFont(self.font)
         self.l2.setFont(self.font)
-        self.b1.setFont(self.font)
+        # self.b1.setFont(self.font)
         self.b2.setFont(self.font)
         self.cb1.setFont(self.font)
         self.cb2.setFont(self.font)
         self.cb3.setFont(self.font)
         self.t1.setFont(self.font)
 
-        self.b1.clicked.connect(self.connect)
+        # self.b1.clicked.connect(self.connect)
         self.b2.clicked.connect(self.close)
         self.t1.clicked.connect(self.test)
         self.cb1.stateChanged.connect(self.changecb1)
@@ -99,7 +100,7 @@ class Dialog(QDialog):
 
         layout.addLayout(v_box,0,0,1,1)
         layout.addWidget(self.formGroupBox,2,0,5,3)
-        layout.addWidget(self.b1,7,0,1,1)
+        # layout.addWidget(self.b1,7,0,1,1)
         layout.addWidget(self.b2,7,1,1,1)
         layout.addWidget(self.t1,7,2,1,1)
         layout.addWidget(self.cb1,8,0,1,1)
@@ -115,6 +116,7 @@ class Dialog(QDialog):
 
         try:
             self.t=threading.Thread(target=self.refresh)
+            self.t.setDaemon(True)
             self.t.start()
         except:
 
@@ -159,23 +161,28 @@ class Dialog(QDialog):
         
      
     def connect(self):
-        try:
-            so =send.client_connect()
+        while 1:
+            if self.status==0:
+                try:
+                    so =send.client_connect()
+                    so.settimeout(2)
+                    self.status=1
+                    t = threading.Thread(target=self.flow, args=[so])
+                    t.start()
 
-            t = threading.Thread(target=self.flow, args=[so])
-            t.start()
+                except:
+                    a = QMessageBox(self)
+                    a.setFont(self.font)
+                    a.setText("程序异常，请退出")
+                    a.setWindowModality(QtCore.Qt.WindowModal)
 
-        except:
-            a = QMessageBox(self)
-            a.setFont(self.font)
-            a.setText("程序异常，请退出")
-            a.setWindowModality(QtCore.Qt.WindowModal)
+                    a.setIcon(QMessageBox.NoIcon)
+                    a.setDefaultButton(QMessageBox.Yes)
 
-            a.setIcon(QMessageBox.NoIcon)
-            a.setDefaultButton(QMessageBox.Yes)
-
-            if a.exec() == 1024:
-                self.close()
+                    if a.exec() == 1024:
+                        self.close()
+            else:
+                pass
 
 
 
@@ -280,13 +287,22 @@ class Dialog(QDialog):
                 x.changetongsheng();
                 x.write(self.username+'.wav')
 
-            send.send(s, self.username)
+            try:
+                send.send(s, self.username)
+            except:
+                self.status=0
+                return 0
             for i in self.userlist:
                 if self.username != i:
-                    send.recv(s)
-                    # t = threading.Thread(target=play.play,args=[i])
-                    # t.start()
-                    play.play(i)
+                    try:
+                        send.recv(s)
+                        # t = threading.Thread(target=play.play,args=[i])
+                        # t.start()
+                        play.play(i)
+                    except:
+                        self.status = 0
+                        return 0
+
             if self.closesignal==1:
                 s.close()
                 break

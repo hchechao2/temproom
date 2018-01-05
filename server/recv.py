@@ -30,7 +30,7 @@ def server_connect(client_number):
     try:
         so.bind(('192.168.1.8', 6666))
         so.listen(1)
-        so.settimeout(None)
+        so.settimeout(10)
         print('listening')
     except socket.error as msg:
         print(msg)
@@ -41,7 +41,7 @@ def server_connect(client_number):
     for i in range(client_number):
         print('连接中....')
         conn,addr=so.accept()
-        conn.settimeout(500)
+        conn.settimeout(5)
         clients.append((conn,addr))
         print("连接成功 "+str(addr))
     return clients
@@ -98,7 +98,7 @@ def send(conn,username):
                 break
             conn.send(data)
     else:
-        print('没接受到文件')
+        print('send时本地没有文件')
     # conn.close()
 
 
@@ -133,12 +133,16 @@ def recv(conn):
         while not recvd_size == filesize:
             if filesize - recvd_size > 1024:
                 data = conn.recv(1024)
-                recvd_size += 1024
+                recvd_size += len(data)
+            elif filesize - recvd_size <0:
+                return 0
             else:
-                print(filesize - recvd_size)
+
                 data = conn.recv(filesize - recvd_size)
                 recvd_size = filesize
             fp.write(data)
+
+
         fp.close()
         print ('end receive...')
     return username
