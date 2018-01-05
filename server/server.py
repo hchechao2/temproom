@@ -46,15 +46,17 @@ def trans1(client):#接受音频文件
 
 def trans2(k,client,t):#转发音频文件
     for j in t:
+        while 1:
+            if not j.isAlive():  # 接受进程结束后转发
+                break
         if j.get_result() == 0:# 如果没接收到文件，程序退出
             global signal
             signal=1
-            j.exit()
+            print('接受失败')
+            return 1
 
         elif j != t[k]:
-            while 1:
-                if not j.isAlive():  # 接受进程结束后转发
-                    break
+
             recv.send(client, j.get_result())
 
 
@@ -91,6 +93,9 @@ def trans3():
 
         for k in range(amount):
             if signal==1:
+                global signal
+                signal=0
+                print('函数重启')
                 return 1
 
             th2=threading.Thread(target=trans2,args=(k,clients[k][0],t1))#创建转发子线程
