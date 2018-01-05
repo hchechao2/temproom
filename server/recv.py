@@ -31,7 +31,7 @@ def server_connect(client_number):
         so.bind(('192.168.1.8', 6666))
         so.listen(1)
         so.settimeout(10)
-        print('listening')
+        print('建立socket')
     except socket.error as msg:
         print(msg)
         sys.exit(1)
@@ -39,7 +39,7 @@ def server_connect(client_number):
 
 
     for i in range(client_number):
-        print('连接中....')
+        print('监听中')
         conn,addr=so.accept()
         conn.settimeout(5)
         clients.append((conn,addr))
@@ -126,7 +126,7 @@ def recv(conn):
     if filesize:
         #print ('filesize is {0}'.format(buf))
         recvd_size = 0  # 定义已接收文件的大小
-        print(username)
+        #print(username)
         fp = open(username+'.wav', 'wb')
         print ('start receiving from..'+username)
 

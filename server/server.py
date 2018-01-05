@@ -63,6 +63,7 @@ def trans3():
     t1=[]
     t2=[]
     total=check()
+    print(total)
     while 1:#检测符合条件的客户端
 
         if check()!=total:
@@ -74,7 +75,7 @@ def trans3():
     # for i in total:
     i=total[0]#测试第一组
     amount=len(i[0])#组内客户端数量
-    print(amount)
+    #print(amount)
     clients=recv.server_connect(amount)#建立socket
     while 1:
         for j in range(amount):
