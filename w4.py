@@ -25,6 +25,7 @@ class CreateWindow(QWidget):
     def init_ui(self,username):
         self.l1 = QLabel('房间号')
         self.l2 = QLabel('密钥')
+        self.l3 = QLabel('说明：密钥请输入4位数字')
         
         roomnumber = random.randint(1000, 9999)
         try:
@@ -50,6 +51,7 @@ class CreateWindow(QWidget):
         self.setFont(self.font)
         self.l1.setFont(self.font)
         self.l2.setFont(self.font)
+        self.l3.setFont(self.font)
         self.b2.setFont(self.font)
 
 
@@ -57,6 +59,7 @@ class CreateWindow(QWidget):
         layout.setSpacing(15)
         layout.addRow(self.l1,self.le1)
         layout.addRow(self.l2,self.le2)
+        layout.addRow(self.l3)
         v_box = QVBoxLayout()
 
         h_box = QHBoxLayout()
