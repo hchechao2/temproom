@@ -5,7 +5,7 @@ def record(username):
     FORMAT = pyaudio.paInt16
     CHANNELS = 2
     RATE = 22050
-    RECORD_SECONDS = 1
+    RECORD_SECONDS = 5
     WAVE_OUTPUT_FILENAME = username+'.wav'
 
     p = pyaudio.PyAudio()
