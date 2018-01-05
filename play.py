@@ -30,7 +30,7 @@ def play(username):
             num +=1
             print('play succeed')
         else:
-            print('no file to play')
-            break
+            print('wait to play')
+
 if __name__=='__main__':
     play('admincbh')

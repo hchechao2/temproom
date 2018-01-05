@@ -285,6 +285,8 @@ class Dialog(QDialog):
     def flow(self,s):
         if s.recv(7).decode() == 'success':
             num=1
+            t = threading.Thread(target=play.play, args=[i])
+            t.start()
             while 1:
                 record.record(self.username)
                 receive_video=self.username+'.wav'
@@ -312,9 +314,7 @@ class Dialog(QDialog):
                         try:
                             send.recv(s,num)
                             num += 1
-                            t = threading.Thread(target=play.play,args=[i])
-                            t.start()
-                            #play.play(i)
+
                         except:
                             print('客户端接受失败')
                             self.status = 0
