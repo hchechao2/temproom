@@ -286,11 +286,11 @@ class Dialog(QDialog):
         if s.recv(7).decode() == 'success':
             print('连接服务器成功')
             num=1
-            for i in self.userlist:
-                if self.username != i:
-                    self.t3 = threading.Thread(target=play.play, args=[i])
-                    self.t3.setDaemon(True)
-                    self.t3.start()
+            # for i in self.userlist:
+            #     if self.username != i:
+            #         self.t3 = threading.Thread(target=play.play, args=[i])
+            #         self.t3.setDaemon(True)
+            #         self.t3.start()
 
             while 1:
                 record.record(self.username)
@@ -320,9 +320,9 @@ class Dialog(QDialog):
                             send.recv(s,num)
                             num += 1
 
-                            # self.t3 = threading.Thread(target=play.play, args=[i])
-                            #
-                            # self.t3.start()
+                            self.t3 = threading.Thread(target=play.play, args=(i,num))
+                            self.t3.setDaemon(True)
+                            self.t3.start()
                         except:
                             print('客户端接受失败')
                             self.status = 0
