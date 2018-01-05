@@ -301,8 +301,9 @@ class Dialog(QDialog):
             try:
                 send.send(s, self.username)
             except:
+                print('客户端发送失败')
                 self.status=0
-                return 0
+                sys.exit()
             for i in self.userlist:
                 if self.username != i:
                     try:
@@ -311,8 +312,9 @@ class Dialog(QDialog):
                         # t.start()
                         play.play(i)
                     except:
+                        print('客户端接受失败')
                         self.status = 0
-                        return 0
+                        sys.exit()
 
             if self.closesignal==1:
                 s.close()
