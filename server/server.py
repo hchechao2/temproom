@@ -62,10 +62,13 @@ def trans2(k,client,t):#转发音频文件
 def trans3():
     t1=[]
     t2=[]
+    total=check()
     while 1:#检测符合条件的客户端
-        total=check()
-        print(total)
-        if len(total):
+
+        if check()!=total:
+            total=check()
+            print(total)
+        if len(total) and len(total[0][0])>=2:
             break
 
     # for i in total:
