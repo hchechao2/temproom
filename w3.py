@@ -21,6 +21,7 @@ class LoginWindow(QWidget):
     def init_ui(self):
         self.l1 = QLabel('用户名')
         self.l2 = QLabel('密码')
+        self.l3 = QLabel('说明：不可包含中文，且应大于4位')
         self.le1 = QLineEdit()
         self.le2 = QLineEdit()
         self.le2.setEchoMode(QLineEdit.Password)
@@ -29,12 +30,14 @@ class LoginWindow(QWidget):
         self.setFont(self.font)
         self.l1.setFont(self.font)
         self.l2.setFont(self.font)
+        self.l3.setFont(self.font)
         self.b.setFont(self.font)
 
         layout=QFormLayout()
         layout.setSpacing(15)
         layout.addRow(self.l1,self.le1)
         layout.addRow(self.l2,self.le2)
+        layout.addRow(self.l3)
 
         v_box = QVBoxLayout()
         h_box = QHBoxLayout()
